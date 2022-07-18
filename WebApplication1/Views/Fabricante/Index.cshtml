@@ -1,8 +1,16 @@
 ﻿@model IEnumerable<WebApplication1.Models.Fabricante>
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     ViewBag.Title = "Listagem de FABRICANTES";
+}
+
+@if (@TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
 }
 <div class="panel panel-primary">
     <div class="panel-heading">

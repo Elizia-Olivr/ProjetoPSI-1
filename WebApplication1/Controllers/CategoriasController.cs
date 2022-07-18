@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Context;
 using WebApplication1.Models;
+
 
 namespace WebApplication1.Controllers
 {
     public class CategoriasController : Controller
     {
-        private static IList<Categoria> cat = new List<Categoria>()
-        {
-            new Categoria() {CategoriaId = 1, Nome ="Notebooks"},
-            new Categoria() {CategoriaId = 2, Nome = "Monitores"},
-            new Categoria() {CategoriaId = 3, Nome=  "Desktops"}
-        };
+        private EFContext context = new EFContext();
+
+        /* private static IList<Categoria> cat = new List<Categoria>()
+         {
+             new Categoria() {CategoriaId = 1, Nome ="Notebooks"},
+             new Categoria() {CategoriaId = 2, Nome = "Monitores"},
+             new Categoria() {CategoriaId = 3, Nome=  "Desktops"}
+         };*/
         // GET: Categorias
         public ActionResult Index()
         {
-            return View(cat);
+            return View(context.Categorias.OrderBy(c => c.Nome));
         }
         // Create get
         public ActionResult Create()
@@ -30,10 +36,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Categoria ca)
         {
-           // IEnumerable<Categoria> a = cat.Where(c => c.CategoriaId >0);
+            // IEnumerable<Categoria> a = cat.Where(c => c.CategoriaId >0);
 
-            ca.CategoriaId = cat.Select(c => c.CategoriaId).Max() + 1;// type ;  1, 2, 3, 4
-            cat.Add(ca);
+            context.Categorias.Add(ca);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
         //Edit alone
