@@ -43,37 +43,74 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
         //Edit alone
-        public ActionResult Edit(int id)
+        public ActionResult Edit(long ? id)
         {
-            return View(cat.Where(m => m.CategoriaId == id).First());//true or false ; 1 ,notebook
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Categoria categoria = context.Categorias.Find(id);
+            //Fabricante fabricante = fab.Where(m => m.FabricanteId == id).First();
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categoria);
         }
         //Edit post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Categoria ca)
+        public ActionResult Edit(Categoria categoria)
         {
-            cat.Remove(cat.Where(c => c.CategoriaId == ca.CategoriaId).First());//true or false; 1 , notebook
-            cat.Add(ca);//colocar o novo id=1
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                context.Entry(categoria).State = EntityState.Modified;
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(categoria);
         }
         //Details alone
-        public ActionResult Details(long id)
+        public ActionResult Details(long ? id)
         {
-            return View(cat.Where(c => c.CategoriaId == id).First());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Categoria categoria = context.Categorias.Find(id);
+            //Fabricante fabricante = fab.Where(m => m.FabricanteId == id).First();
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categoria);
         }
         //Delete alone
         public ActionResult Delete(int id)
         {
-            Categoria a = cat.Where(c => c.CategoriaId == id).First();
-            return View(cat.Where(c => c.CategoriaId == id).First());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Categoria categoria = context.Categorias.Find(id);
+            //Fabricante fabricante = fab.Where(m => m.FabricanteId == id).First();
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categoria);
         }
         //Delete post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Categoria ca)
+        public ActionResult Delete(long ? id)
         {
-            Categoria a = cat.Where(c => c.CategoriaId == ca.CategoriaId).First();
-            cat.Remove(a);
+            Categoria categoria = context.Categorias.Find(id);
+            context.Categorias.Remove(categoria);
+            context.SaveChanges();
+            TempData["Message"] = "categoria " + categoria.Nome.ToUpper() + " foi removido";
+            //Fabricante fabricante = fab.Where(m => m.FabricanteId == id).First();
+            //fab.Remove(fabricante);
             return RedirectToAction("Index");
         }
     }
