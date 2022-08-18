@@ -24,13 +24,16 @@
         <div class="row">
             <div class="col-xs-3 col-md-3 bg-success">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation" class="active"><a href="#">Home</a></li>
-                    <li role="presentation">
+                    <li id="lihome" role="presentation" class="active"><a href="#">Home</a></li>
+                    <li id="liCategori"role="presentation">
                         @Html.ActionLink("Categorias", "Index", "Categorias")
                     </li>
-                    <li role="presentation">
+                    <li  id="liFabricantes" role="presentation">
                         @Html.ActionLink("Fabricante", "Index", "Fabricante")
                     </li>
+                    <li id="liProdutos" role="presentation">
+                        @Html.ActionLink("Produtos", "Index","Produto")
+                </li>
                 </ul>
             </div>
             <div class="col-xs-9 col-md-9">

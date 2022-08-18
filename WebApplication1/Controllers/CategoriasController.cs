@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = context.Categorias.Find(id);
+            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Fabricante").First();
             //Fabricante fabricante = fab.Where(m => m.FabricanteId == id).First();
             if (categoria == null)
             {
