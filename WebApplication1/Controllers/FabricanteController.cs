@@ -6,7 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Context;
-using WebApplication1.Models;
+using Modelo.Cadastros;
 
 namespace WebApplication1.Controllers
 {
